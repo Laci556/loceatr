@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "pentek-van",
+    "name": "Péntek Van",
     "slug": "pentek-van",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -10,6 +10,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "scheme": "pentekvan",
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -23,7 +24,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.bucsailaszlo.pentekvan"
     },
     "web": {
       "favicon": "./assets/favicon.png"
