@@ -1,7 +1,7 @@
+import 'react-native-gesture-handler';
 import 'react-native-url-polyfill/auto';
 import React, { useEffect } from 'react';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
-import { Text, View } from 'react-native';
 import * as eva from '@eva-design/eva';
 import Navigation from './navigation';
 import { AuthProvider } from './provider/AuthProvider';
@@ -28,7 +28,6 @@ export default function App() {
 
   return (
     <>
-      <StatusBar translucent={true} />
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider {...eva} theme={eva.light} customMapping={mapping}>
         <AuthProvider>

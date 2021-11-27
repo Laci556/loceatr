@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import Layout from '../../../components/layout';
 import { Button, Input } from '../../../components';
-import { LoginProps } from '../../propTypes';
+import { LoginProps } from '../../../types/propTypes';
 import { supabase } from '../../../initSupabase';
 import * as Linking from 'expo-linking';
 

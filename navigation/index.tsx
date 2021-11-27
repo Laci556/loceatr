@@ -10,15 +10,21 @@ import { supabase } from '../initSupabase';
 import * as Linking from 'expo-linking';
 import * as SplashScreen from 'expo-splash-screen';
 import Home from './screens/Root/Home';
+import Settings from './screens/Root/Settings';
+import History from './screens/Root/History';
 import Login from './screens/Login/Login';
 import Splash from './screens/Login/Splash';
 import LoginError from './screens/Login/Error';
 import Success from './screens/Login/Success';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import TabBar from '../components/layout/TabBar';
+import { StatusBar } from 'expo-status-bar';
+import { tan } from '../constants/colors';
 
-export type RootStackParamList = {
+export type RootTabParamList = {
   Home: undefined;
+  Settings: undefined;
+  History: undefined;
 };
 
 export type LoginStackParamList = {
@@ -28,8 +34,7 @@ export type LoginStackParamList = {
   LoginError: undefined;
 };
 
-const RootStack = createNativeStackNavigator<RootStackParamList>();
-const Tab = createBottomTabNavigator<RootStackParamList>();
+const Tab = createBottomTabNavigator<RootTabParamList>();
 const LoginStack = createNativeStackNavigator<LoginStackParamList>();
 
 export default () => {
@@ -93,26 +98,36 @@ export default () => {
   return (
     <NavigationContainer ref={navigationRef}>
       {user == true && (
-        <Tab.Navigator
-          screenOptions={{ headerShown: false }}
-          initialRouteName="Home"
-          tabBar={(props) => <TabBar {...props} />}>
-          <Tab.Screen name="Home" component={Home} />
-        </Tab.Navigator>
+        <>
+          <StatusBar backgroundColor={'transparent'} translucent={true} />
+
+          <Tab.Navigator
+            screenOptions={{ headerShown: false }}
+            initialRouteName="Home"
+            tabBar={(props) => <TabBar {...props} />}>
+            <Tab.Screen name="History" component={History} />
+            <Tab.Screen name="Home" component={Home} />
+            <Tab.Screen name="Settings" component={Settings} />
+          </Tab.Navigator>
+        </>
       )}
       {user == false && (
-        <LoginStack.Navigator
-          // initialRouteName={toLoginErrorScreen ? 'LoginError' : 'Splash'}
-          initialRouteName="Success"
-          screenOptions={{
-            headerShown: false,
-            animation: 'slide_from_right',
-          }}>
-          <LoginStack.Screen name="Splash" component={Splash} />
-          <LoginStack.Screen name="Login" component={Login} />
-          <LoginStack.Screen name="Success" component={Success} />
-          <LoginStack.Screen name="LoginError" component={LoginError} />
-        </LoginStack.Navigator>
+        <>
+          <StatusBar backgroundColor={'transparent'} translucent={true} />
+
+          <LoginStack.Navigator
+            initialRouteName={toLoginErrorScreen ? 'LoginError' : 'Splash'}
+            // initialRouteName="Success"
+            screenOptions={{
+              headerShown: false,
+              animation: 'slide_from_right',
+            }}>
+            <LoginStack.Screen name="Splash" component={Splash} />
+            <LoginStack.Screen name="Login" component={Login} />
+            <LoginStack.Screen name="Success" component={Success} />
+            <LoginStack.Screen name="LoginError" component={LoginError} />
+          </LoginStack.Navigator>
+        </>
       )}
     </NavigationContainer>
   );

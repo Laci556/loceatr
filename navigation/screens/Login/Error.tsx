@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dimensions } from 'react-native';
 import { Icon, Text, Layout, Button } from '@ui-kitten/components';
-import { LoginErrorProps } from '../../propTypes';
+import { LoginErrorProps } from '../../../types/propTypes';
 
 const { height } = Dimensions.get('window');
 

@@ -9,6 +9,7 @@ import {
 import { Layout as KittenLayout } from '@ui-kitten/components';
 import { tan } from '../../constants/colors';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
+import ScrollLayout from './ScrollLayout';
 
 interface Props {
   style?: ViewStyle;
@@ -29,3 +30,4 @@ const Layout: React.FC<Props> = ({ children, style = {} }) => {
 };
 
 export default Layout;
+export { ScrollLayout };

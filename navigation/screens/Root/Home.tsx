@@ -1,9 +1,16 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, View, StatusBar, Dimensions } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  StatusBar,
+  Dimensions,
+  ScrollView,
+} from 'react-native';
 import { Text } from '@ui-kitten/components';
-import Layout from '../../../components/layout';
+import { ScrollLayout } from '../../../components/layout';
 import { NotYet } from '../../../components';
 import { supabase } from '../../../initSupabase';
+import { tan } from '../../../constants/colors';
 
 const { width } = Dimensions.get('window');
 
@@ -13,20 +20,25 @@ export default function Home() {
   });
 
   return (
-    <Layout style={styles.home}>
+    <ScrollLayout>
       <View style={{ width: '100%', aspectRatio: 1.3 }}>
         <NotYet />
       </View>
       <Text category="h4" style={{ marginTop: 10 }}>
-        még nem árulhatjuk el a mai javaslatod, nézz vissza később!
+        még nem árulhatjuk el a mai ajánlásod, nézz vissza később!
       </Text>
-    </Layout>
+    </ScrollLayout>
   );
 }
 
 const styles = StyleSheet.create({
   home: {
-    padding: 24,
-    paddingTop: 10 + (StatusBar.currentHeight || 0),
+    backgroundColor: tan,
+    // paddingTop: StatusBar.currentHeight || 0,
+  },
+  homeInner: {
+    paddingBottom: 113,
+    paddingHorizontal: 24,
+    paddingTop: 10,
   },
 });

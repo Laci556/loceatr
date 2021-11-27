@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { Text } from '@ui-kitten/components';
 import Layout from '../../../components/layout';
-import { SplashProps } from '../../propTypes';
+import { SplashProps } from '../../../types/propTypes';
 import { Button } from '../../../components';
 
 const { height, width } = Dimensions.get('window');

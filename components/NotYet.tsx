@@ -25,7 +25,6 @@ export default function NotYet({ style = {} }: Props) {
         Math.floor(Math.random() * 14)
       ].media[0].gif.url
     );
-    console.log(gif);
   };
 
   useEffect(() => {

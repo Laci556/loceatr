@@ -3,7 +3,7 @@ import { Dimensions, Image, StyleSheet, View } from 'react-native';
 import { Icon, Text } from '@ui-kitten/components';
 import Layout from '../../../components/layout';
 import { Button } from '../../../components';
-import { SuccessProps } from '../../propTypes';
+import { SuccessProps } from '../../../types/propTypes';
 
 const { height } = Dimensions.get('window');
 
