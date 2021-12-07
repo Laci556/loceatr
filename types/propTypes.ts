@@ -15,6 +15,8 @@ export type SuccessProps = NativeStackScreenProps<
   'Success'
 >;
 
+export type HomeProps = BottomTabScreenProps<RootTabParamList, 'Home'>;
+
 export type HistoryScreenProps = NativeStackScreenProps<
   HistoryStackParamList,
   'HistoryScreen'

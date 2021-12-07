@@ -6,11 +6,15 @@ import {
   View,
   Image,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import { Text } from '@ui-kitten/components';
 import MasonryList from '@react-native-seoul/masonry-list';
 import { sapphire, tan, yellow } from '../../../../constants/colors';
-import { Recommendation } from '../../../../types/recommendation';
+import {
+  DBRecommendation,
+  Recommendation,
+} from '../../../../types/recommendation';
 import { SharedElement } from 'react-navigation-shared-element';
 import { HistoryScreenProps } from '../../../../types/propTypes';
 import { useIsFocused } from '@react-navigation/core';
@@ -21,12 +25,16 @@ import Animated, {
   Easing,
   withDelay,
 } from 'react-native-reanimated';
+import { supabase } from '../../../../initSupabase';
+import dayjs from 'dayjs';
 
 interface HistoryItemProps {
   item: Recommendation;
   onPress: () => void;
   focused: boolean;
 }
+
+const { height } = Dimensions.get('window');
 
 function HistoryItem({ item, onPress, focused }: HistoryItemProps) {
   const [aspectRatio, setAspectRatio] = useState(Math.random() * 0.5 + 0.5);
@@ -65,7 +73,9 @@ function HistoryItem({ item, onPress, focused }: HistoryItemProps) {
           <View style={{ flex: 1 }}>
             <SharedElement id={`${item.id}.image`} style={{ flex: 1 }}>
               <Image
-                source={{ uri: item.image }}
+                source={{
+                  uri: `${item.image}?${item.image_updated}`,
+                }}
                 style={{
                   flex: 1,
                   borderRadius: 24,
@@ -108,48 +118,34 @@ export default function History({ navigation }: HistoryScreenProps) {
   const isFocused = useIsFocused();
 
   const fetchData = async () => {
-    setData([
-      {
-        name: 'Lakat Presszó asd asdasd',
-        date: '22-11-2021',
-        location: { lat: 47.4658541343269, lon: 19.022710423027938 },
-        address: 'Budapest, Kelenföldi út 52, 1115',
-        id: '1',
-        image: 'https://kocsmablog.hu/wp-content/uploads/lakat-presszo-01.jpg',
-      },
-      {
-        name: 'Lakat Presszó',
-        date: '22-11-2021',
-        location: { lat: 47.4658541343269, lon: 19.022710423027938 },
-        address: 'Budapest, Kelenföldi út 52, 1115',
-        id: '2',
-        image: 'https://kocsmablog.hu/wp-content/uploads/lakat-presszo-01.jpg',
-      },
-      {
-        name: 'Lakat Presszó',
-        date: '22-11-2021',
-        location: { lat: 47.4658541343269, lon: 19.022710423027938 },
-        address: 'Budapest, Kelenföldi út 52, 1115',
-        id: '3',
-        image: 'https://kocsmablog.hu/wp-content/uploads/lakat-presszo-01.jpg',
-      },
-      {
-        name: 'Lakat Presszó',
-        date: '22-11-2021',
-        location: { lat: 47.4658541343269, lon: 19.022710423027938 },
-        address: 'Budapest, Kelenföldi út 52, 1115',
-        id: '4',
-        image: 'https://kocsmablog.hu/wp-content/uploads/lakat-presszo-01.jpg',
-      },
-      {
-        name: 'Lakat Presszó',
-        date: '22-11-2021',
-        location: { lat: 47.4658541343269, lon: 19.022710423027938 },
-        address: 'Budapest, Kelenföldi út 52, 1115',
-        id: '5',
-        image: 'https://kocsmablog.hu/wp-content/uploads/lakat-presszo-01.jpg',
-      },
-    ]);
+    const { data: DBdata, error } = await supabase
+      .from<DBRecommendation>('recommendations')
+      .select(
+        `
+        created_at,
+        places (
+          id, name, address, lat, lng, image_updated, desc
+        )
+      `
+      )
+      .eq('user_id', supabase.auth.user()?.id || '0')
+      .lt('created_at', dayjs().startOf('d').format())
+      .order('created_at', { ascending: false });
+
+    console.log(DBdata, error);
+
+    setData(
+      DBdata?.map((r) => ({
+        id: r.places.id,
+        image_updated: r.places.image_updated,
+        name: r.places.name,
+        address: r.places.address,
+        location: { lat: r.places.lat, lon: r.places.lng },
+        desc: r.places.desc,
+        date: r.created_at,
+        image: `https://kmniwalvylgtvmkfwdhq.supabase.in/storage/v1/object/public/images/${r.places.id}/profile.png`,
+      })) || []
+    );
   };
 
   useEffect(() => {
@@ -176,28 +172,32 @@ export default function History({ navigation }: HistoryScreenProps) {
         backgroundColor: tan,
         paddingTop: StatusBar.currentHeight || 0,
       }}>
-      {data !== null && data.length && (
+      {data !== null && (
         <MasonryList
-          style={{ paddingHorizontal: 14 }}
-          contentContainerStyle={{ paddingTop: 10, paddingBottom: 100 }}
+          style={{ paddingHorizontal: 14, flex: 1 }}
+          contentContainerStyle={{
+            paddingTop: 10,
+            paddingBottom: 100,
+            minHeight: height,
+          }}
           // TODO: 113
           data={data}
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}
           overScrollMode="never"
+          ListEmptyComponent={() => (
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: 24,
+              }}>
+              <Text category="h4">még nem kaptál ajánlást</Text>
+              <Text category="h4">¯\_(ツ)_/¯</Text>
+            </View>
+          )}
         />
-      )}
-      {data !== null && data.length === 0 && (
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            padding: 24,
-          }}>
-          <Text category="h4">még nem kaptál ajánlást</Text>
-          <Text category="h4">¯\_(ツ)_/¯</Text>
-        </View>
       )}
     </View>
   );

@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native';
-import { Text } from '@ui-kitten/components';
-import Review from './Review';
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Dimensions,
+} from 'react-native';
+import { ListItem, Text } from '@ui-kitten/components';
 import Animated, {
   Easing,
   runOnJS,
@@ -11,7 +16,10 @@ import Animated, {
   withSequence,
   withTiming,
 } from 'react-native-reanimated';
+import Review from './Review';
+import OpenHours from './OpenHours';
 import { darkTan } from '../../constants/colors';
+import { Recommendation } from '../../types/recommendation';
 
 interface TabButtonProps {
   selected: boolean;
@@ -31,27 +39,31 @@ function TabButton({ selected, value, name, onPress }: TabButtonProps) {
   );
 }
 
-export default function Tabs() {
+const { width } = Dimensions.get('window');
+
+export default function Tabs({
+  recommendation,
+}: {
+  recommendation: Recommendation;
+}) {
   const buttons = [
-    { value: 'review', name: 'értékelés' },
+    // { value: 'menu', name: 'menü' },
     { value: 'open-hours', name: 'nyitvatartás' },
-    { value: 'menu', name: 'menü' },
+    { value: 'review', name: 'értékelés' },
   ];
-  const [selectedPre, setSelectedPre] = useState<string>('');
   const [selectedTab, setSelectedTab] = useState<string>(buttons[0].value);
-  const opacity = useSharedValue(1);
+  const translateX = useSharedValue(0);
   const animatedView = useAnimatedStyle(() => ({
-    opacity: opacity.value,
+    transform: [{ translateX: translateX.value }],
   }));
 
-  const selectTab = (s: string) => {
-    opacity.value = withSequence(
-      withTiming(0, { duration: 100, easing: Easing.quad }, (isFinished) => {
-        if (isFinished) runOnJS(setSelectedTab)(s);
-      }),
-      withDelay(10, withTiming(1, { duration: 100, easing: Easing.quad }))
+  useEffect(() => {
+    translateX.value = withTiming(
+      -Object.values(buttons)
+        .map((o) => o.value)
+        .indexOf(selectedTab) * width
     );
-  };
+  }, [selectedTab]);
 
   return (
     <View style={styles.container}>
@@ -63,17 +75,37 @@ export default function Tabs() {
           <TabButton
             name={name}
             value={value}
-            onPress={selectTab}
+            onPress={setSelectedTab}
             selected={selectedTab == value}
             key={value}
           />
         ))}
       </ScrollView>
-      <Animated.View style={[{ marginTop: 20 }, animatedView]}>
-        {selectedTab == 'review' && <Review />}
-        {selectedTab == 'open-hours' && <Text>nyitvatartas</Text>}
-        {selectedTab == 'menu' && <Text>menu</Text>}
-      </Animated.View>
+      <View
+        style={{
+          marginTop: 20,
+          overflow: 'visible',
+          width: width - 48,
+        }}>
+        <Animated.View
+          style={[
+            {
+              flexDirection: 'row',
+              width: width * buttons.length,
+            },
+            animatedView,
+          ]}>
+          {buttons.map((s) => (
+            <View style={{ width: width - 48, marginRight: 48 }} key={s.value}>
+              {s.value == 'review' && <Review placeID={recommendation.id} />}
+              {s.value == 'open-hours' && (
+                <OpenHours placeId={recommendation.id} />
+              )}
+              {s.value == 'menu' && <Text>menu</Text>}
+            </View>
+          ))}
+        </Animated.View>
+      </View>
     </View>
   );
 }

@@ -104,7 +104,8 @@ export default () => {
           <Tab.Navigator
             screenOptions={{ headerShown: false }}
             initialRouteName="Home"
-            tabBar={(props) => <TabBar {...props} />}>
+            tabBar={(props) => <TabBar {...props} />}
+            sceneContainerStyle={{ backgroundColor: tan }}>
             <Tab.Screen name="History" component={History} />
             <Tab.Screen name="Home" component={Home} />
             <Tab.Screen name="Settings" component={Settings} />

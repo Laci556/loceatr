@@ -20,6 +20,7 @@ export default function App() {
     'HKGrotesk-Medium': require('./assets/fonts/HKGrotesk/HKGrotesk-Medium.otf'),
     'HKGrotesk-SemiBold': require('./assets/fonts/HKGrotesk/HKGrotesk-SemiBold.otf'),
     'HKGrotesk-Bold': require('./assets/fonts/HKGrotesk/HKGrotesk-Bold.otf'),
+    'HKGrotesk-Italic': require('./assets/fonts/HKGrotesk/HKGrotesk-Italic.otf'),
   });
 
   if (!loaded) {
@@ -29,7 +30,10 @@ export default function App() {
   return (
     <>
       <IconRegistry icons={EvaIconsPack} />
-      <ApplicationProvider {...eva} theme={eva.light} customMapping={mapping}>
+      <ApplicationProvider
+        {...eva}
+        theme={eva.light}
+        customMapping={mapping as any}>
         <AuthProvider>
           <Navigation />
         </AuthProvider>

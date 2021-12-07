@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   View,
   Text,
+  Dimensions,
+  StatusBar,
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { orange, sapphire, yellow } from '../../constants/colors';
@@ -15,6 +17,7 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
   interpolate,
+  withTiming,
 } from 'react-native-reanimated';
 // import { Text } from '@ui-kitten/components';
 
@@ -23,6 +26,8 @@ const icons2 = {
   Settings: 'cog',
   History: 'bookmark',
 };
+
+const { height } = Dimensions.get('window');
 
 const TabBarItem = ({
   name,
@@ -40,9 +45,9 @@ const TabBarItem = ({
 
   useEffect(() => {
     if (active) {
-      opacity.value = withSpring(1.2, { damping: 20, stiffness: 500 });
+      opacity.value = withTiming(1.2);
     } else {
-      opacity.value = withSpring(0.8, { stiffness: 150, damping: 30 });
+      opacity.value = withTiming(1.1);
     }
   }, [active]);
 
@@ -53,7 +58,7 @@ const TabBarItem = ({
       activeOpacity={1}>
       <Animated.View style={animatedStyle}>
         <FontAwesome
-          name={icons2[name]}
+          name={icons2[name as 'Home' | 'Settings' | 'History'] as any}
           size={name == 'home' ? 40 : 36}
           color={sapphire}
           style={{ margin: 15 }}
@@ -78,7 +83,7 @@ export default ({ navigation, state, descriptors }: BottomTabBarProps) => {
 
           if (!isFocused && !event.defaultPrevented) {
             // The `merge: true` option makes sure that the params inside the tab screen are preserved
-            navigation.navigate({ name: route.name, merge: true });
+            navigation.navigate({ name: route.name, merge: true } as any);
           }
         };
 
@@ -103,10 +108,11 @@ const styles = StyleSheet.create({
     height: 65,
     position: 'absolute',
     borderRadius: 65,
-    bottom: 24,
+    // bottom: 24,
+    top: height - 65 - 24 + (StatusBar.currentHeight || 0),
     left: 24,
     right: 24,
-    backgroundColor: orange,
+    backgroundColor: orange + 'dd',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',

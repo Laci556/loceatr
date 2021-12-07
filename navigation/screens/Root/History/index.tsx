@@ -2,6 +2,7 @@ import { TransitionPresets } from '@react-navigation/stack';
 import React from 'react';
 import { StatusBar, View } from 'react-native';
 import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
+import { tan } from '../../../../constants/colors';
 import { Recommendation } from '../../../../types/recommendation';
 import History from './History';
 import HistoryDetails from './HistoryDetails';
@@ -19,6 +20,9 @@ export default () => (
   <Stack.Navigator
     screenOptions={{
       headerShown: false,
+      cardStyle: {
+        backgroundColor: tan,
+      },
     }}>
     <Stack.Screen component={History} name="HistoryScreen" />
     <Stack.Screen

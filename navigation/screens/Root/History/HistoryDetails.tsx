@@ -76,7 +76,7 @@ export default function HistoryDetails({
           ]}>
           <SharedElement id={`${item.id}.image`}>
             <Image
-              source={{ uri: item.image }}
+              source={{ uri: `${item.image}?${item.image_updated}` }}
               style={styles.image}
               resizeMode="cover"
             />
@@ -148,9 +148,12 @@ export default function HistoryDetails({
       <Text category="h2" style={{ marginTop: 10 }}>
         {item.name}
       </Text>
+      <Text style={{ marginBottom: 10 }} category="h6">
+        {item.desc}
+      </Text>
       <Text category="s1">{item.address}</Text>
 
-      <Tabs />
+      <Tabs recommendation={item} />
     </ScrollLayout>
   );
 }
