@@ -21,7 +21,7 @@ export default function Splash({ navigation }: SplashProps) {
       style={{
         flex: 1,
         padding: 24,
-        paddingTop: 100,
+        paddingTop: 160,
         backgroundColor: '#FBE8DE',
       }}>
       <View style={styles.backgroundLayer}>
@@ -42,23 +42,25 @@ export default function Splash({ navigation }: SplashProps) {
         />
       </View>
       <View>
-        <Text category="s2">Tudod, milyen nap van?</Text>
-        <Text category="h1">Péntek van</Text>
+        <Text
+          style={{ fontFamily: 'Neco-Bold', fontSize: 52, color: '#160034' }}>
+          loc
+          <Text
+            style={{ fontFamily: 'Neco-Bold', fontSize: 52, color: '#4CA96D' }}>
+            eat
+          </Text>
+          r
+        </Text>
       </View>
       <View style={{ flex: 1 }}></View>
       <View></View>
       <View>
         <Text category="s1" style={{ marginBottom: 30 }}>
-          Készen állsz, hogy naponta személyre szabott ajánlásokkal segítsünk{' '}
-          <Text category="s1" style={{ textDecorationLine: 'line-through' }}>
-            lerészegedni
-          </Text>{' '}
-          levezetni az egyetemi stresszt?
+          szeretnéd megismerni a környéken rejtőzködő éttermeket? esetleg
+          beülnél egy kávéra? vagy péntek estére keresel programot?{'\n'}itt
+          mind megtalálod!
         </Text>
-        <Button
-          onPress={() => navigation.navigate('Login')}
-          label="hát persze!"
-        />
+        <Button onPress={() => navigation.navigate('Login')} label="tovább!" />
       </View>
     </Layout>
   );

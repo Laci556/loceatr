@@ -10,7 +10,7 @@ npm-debug.*
 *.orig.*
 web-build/
 
-constants/supabase.ts
+# constants/supabase.ts
 
 # macOS
 .DS_Store

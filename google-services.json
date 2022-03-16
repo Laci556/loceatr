@@ -7,6 +7,35 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:860758426848:android:65f3876709cd79cd79bc85",
+        "android_client_info": {
+          "package_name": "com.bucsailaszlo.loceatr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "860758426848-mh7qvcduebnij0gdkp4835lebresscld.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDd4UKrB-5fcIfY9M6oZTrWX-mP1qKFvlI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "860758426848-mh7qvcduebnij0gdkp4835lebresscld.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:860758426848:android:f050a4b8f1fae64779bc85",
         "android_client_info": {
           "package_name": "com.bucsailaszlo.pentekvan"

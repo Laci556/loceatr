@@ -21,6 +21,7 @@ export default function App() {
     'HKGrotesk-SemiBold': require('./assets/fonts/HKGrotesk/HKGrotesk-SemiBold.otf'),
     'HKGrotesk-Bold': require('./assets/fonts/HKGrotesk/HKGrotesk-Bold.otf'),
     'HKGrotesk-Italic': require('./assets/fonts/HKGrotesk/HKGrotesk-Italic.otf'),
+    'Neco-Bold': require('./assets/fonts/Neco/Neco-Bold.otf'),
   });
 
   if (!loaded) {

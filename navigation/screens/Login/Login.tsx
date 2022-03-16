@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text } from '@ui-kitten/components';
 import {
   SafeAreaView,
@@ -26,7 +26,7 @@ export default function Login({ navigation }: LoginProps) {
     const { error } = await supabase.auth.signIn(
       { email },
       {
-        redirectTo: Linking.createURL('magic-link'),
+        redirectTo: Linking.createURL('/magic-link'),
       }
     );
     setLodaing(false);

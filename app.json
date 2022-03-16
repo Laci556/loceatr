@@ -1,16 +1,16 @@
 {
   "expo": {
-    "name": "Péntek Van",
-    "slug": "pentek-van",
-    "version": "1.0.0",
+    "name": "loceatr",
+    "slug": "loceatr",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#FBE8DE"
     },
-    "scheme": "pentekvan",
+    "scheme": "loceatr",
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -24,10 +24,12 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.bucsailaszlo.pentekvan"
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyA_20-T4lWgzUe5qXoGrFu9jNQfcHAHNbw"
+        }
+      },
+      "package": "com.bucsailaszlo.loceatr"
     }
   }
 }

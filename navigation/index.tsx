@@ -99,7 +99,11 @@ export default () => {
     <NavigationContainer ref={navigationRef}>
       {user == true && (
         <>
-          <StatusBar backgroundColor={'transparent'} translucent={true} />
+          <StatusBar
+            backgroundColor={'transparent'}
+            translucent={true}
+            style="dark"
+          />
 
           <Tab.Navigator
             screenOptions={{ headerShown: false }}
@@ -114,7 +118,11 @@ export default () => {
       )}
       {user == false && (
         <>
-          <StatusBar backgroundColor={'transparent'} translucent={true} />
+          <StatusBar
+            backgroundColor={'transparent'}
+            translucent={true}
+            style="dark"
+          />
 
           <LoginStack.Navigator
             initialRouteName={toLoginErrorScreen ? 'LoginError' : 'Splash'}
